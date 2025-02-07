@@ -1,0 +1,121 @@
+{% extends 'layout.html' %}
+{% block title %}Empowerment & Social Protection{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section text-center text-white py-5">
+    <div class="container">
+        <h1 class="display-4 font-weight-bold">Empowerment & Social Protection</h1>
+        <p class="lead">Breaking barriers, creating opportunities. Let's reduce poverty and uplift lives through employment, social protection, and financial inclusion.</p>
+        <a href="#job-skills" class="btn btn-warning btn-lg mt-3">Explore Opportunities</a>
+    </div>
+</div>
+
+<!-- Job & Skills Portal -->
+<section id="job-skills" class="py-5 bg-dark text-white text-center">
+    <div class="container">
+        <div class="card card-dark border-gradient">
+            <div class="card-body">
+                <h2 class="card-title text-warning">AI-Powered Job & Skills Portal</h2>
+                <p class="card-text">Discover personalized job opportunities & skill-building courses with AI assistance.</p>
+                <button id="get-jobs" class="btn btn-primary mt-3">Find Jobs with AI</button>
+                <div id="job-results" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Eligibility Checker -->
+<section class="eligibility-section py-5 bg-dark text-white text-center">
+    <div class="container">
+        <div class="card card-dark border-gradient">
+            <div class="card-body">
+                <h2 class="card-title text-info">Eligibility Checker for Social Protection</h2>
+                <p class="card-text">Find out if you qualify for welfare programs instantly.</p>
+                <input type="text" id="eligibility-input" class="form-control w-50 mx-auto mt-3" placeholder="Enter your details">
+                <button id="check-eligibility" class="btn btn-success mt-3">Check Now</button>
+                <div id="eligibility-result" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Microfinance & Loans -->
+<section class="py-5 bg-dark text-white text-center">
+    <div class="container">
+        <div class="card card-dark border-gradient">
+            <div class="card-body">
+                <h2 class="card-title text-danger">Microfinance & Loans</h2>
+                <p class="card-text">Empower small businesses with access to financial resources.</p>
+                <a href="microfinance.html" class="btn btn-purple mt-3">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NGO & Volunteer Hub -->
+<section class="bg-dark text-white py-5 text-center">
+    <div class="container">
+        <div class="card card-dark border-gradient">
+            <div class="card-body">
+                <h2 class="card-title text-success">NGO & Volunteer Hub</h2>
+                <p class="card-text">Find local NGOs and volunteer to make a difference.</p>
+                <a href="volunteer.html" class="btn btn-danger mt-3">Get Involved</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="text-center py-5 bg-dark text-white">
+    <div class="container">
+        <div class="card card-dark border-gradient">
+            <div class="card-body">
+                <h2 class="card-title text-primary">Take Action Today</h2>
+                <p class="card-text">Your support can change lives. Donate, volunteer, or contribute to microfinance initiatives.</p>
+                <a href="donate.html" class="btn btn-warning mx-2">Donate Now</a>
+                <a href="volunteer.html" class="btn btn-primary mx-2">Become a Volunteer</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    body {
+        padding-top: 100px;
+        background-color: #121212;
+    }
+    
+    .hero-section {
+        background: linear-gradient(to right, #4a00e0, #8e2de2);
+        padding: 100px 0;
+    }
+
+    .card-dark {
+        background-color: #1e1e1e;
+        color: white;
+        padding: 20px;
+        border-radius: 25px;
+        transition: 0.3s ease-in-out;
+        position: relative;
+        border: 3px solid transparent;
+    }
+
+    .border-gradient {
+        border-image: linear-gradient(45deg, #fc6262, #fca259, #faf856, #8bfc5e, #62fcf1, #547bfa, #b25bff, #fd75bb) 1;
+        border-width: 3px;
+        border-style: solid;
+        border-radius: 10px;
+    }
+
+    .card-dark:hover {
+        box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.7);
+        transform: translateY(-5px);
+        border: none;
+    }
+</style>
+
+<link rel="stylesheet" href="static/css/styles.css">
+<script src="static/js/scripts.js"></script>
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}No Poverty{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    <style>
+        /* Navbar Styling */
+        .navbar {
+            height: 80px; /* Fixed height */
+            background-color: #323232 !important;
+            box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 24px !important;
+        }
+
+        /* Ensuring consistency in buttons and links */
+        .navbar-nav .nav-link,
+        .navbar-nav .btn {
+            font-size: 16px !important;
+            padding: 10px 20px !important;
+            border-radius: 6px !important;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar-nav .btn-outline-light {
+            border: 2px solid white !important;
+        }
+
+        .navbar-nav .btn:hover,
+        .navbar-nav .nav-link:hover {
+            background-color: #9aebfb !important;
+            color: #1c1c1c !important;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 80px; /* Adjusted for navbar height */
+            left: 0;
+            background: #1c1c1c;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            box-shadow: 4px 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            padding: 13px 16px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .sidebar .nav-link:hover {
+            background: #4f86f6;
+            color: #1c1c1c;
+        }
+
+        /* Ensure consistent spacing */
+        .container-fluid {
+            margin-left: 260px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+        <a class="navbar-brand font-weight-bold text-white" href="#">No Poverty</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light mx-2" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-light mx-2" href="{% url 'tweet_list' %}">Tweet Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Logout</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'register' %}" class="btn btn-primary mx-2">Register</a>
+                    <a href="{% url 'login' %}" class="btn btn-success mx-2">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav class="sidebar text-white p-3">
+            <ul class="nav flex-column text-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Poverty Analysis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'aidloc' %}">Aid Locator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Job Opportunities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'empowerment' %}">Empowerment & Social Protection</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'resilience' %}">Resilience & Crisis Support</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'policy' %}">Policy & Community Engagement</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>

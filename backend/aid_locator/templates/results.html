@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}Results - Aid Locator{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="title">Results for query: <span class="highlight">{{ query }}</span></h1>
+
+    <h2 class="section-title">Welfare Aids:</h2>
+    {% if results.welfare_aids %}
+        <ul class="list">
+        {% for aid in results.welfare_aids %}
+            <li class="list-item">{{ aid }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-results">No welfare aids found for the given query.</p>
+    {% endif %}
+
+    <h2 class="section-title">Job Opportunities:</h2>
+    {% if results.job_opportunities %}
+        <ul class="list">
+        {% for job in results.job_opportunities %}
+            <li class="list-item">{{ job }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-results">No job opportunities found for the given query.</p>
+    {% endif %}
+
+    <a href="{% url 'aidloc' %}" class="back-btn">Go Back</a>
+</div>
+{% endblock %}

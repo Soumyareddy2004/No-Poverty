@@ -1,0 +1,7 @@
+echo "poverty_env/" >> .gitignore
+echo "backend/__pycache__/" >> .gitignore
+echo "*.pyc" >> .gitignore
+echo "*.pyo" >> .gitignore
+echo "*.log" >> .gitignore
+echo "db.sqlite3" >> .gitignore
+echo ".env" >> .gitignore

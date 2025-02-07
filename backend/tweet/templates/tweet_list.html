@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block title %}
+No Poverty - Tweets
+{% endblock %}
+{% block content %}
+<style>
+    body {
+      padding-top: 50px;
+        background-color: #121212;
+        color: #fff;
+    }
+    .tweet-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
+    }
+    .card {
+        background: #1e1e1e;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        width: 300px;
+    }
+    .card img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 180px;
+        object-fit: cover;
+    }
+    .impact-message {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+    .btn-primary {
+        background-color: #ff9800;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #e68900;
+    }
+</style>
+
+<h1 class="text-center mt-4">Welcome to No Poverty Tweets</h1>
+<p class="text-center impact-message">Your words can inspire change! Share your thoughts and encourage action to eradicate poverty worldwide.</p>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="{% url 'tweet_create' %}">Create a Tweet</a>
+</div>
+
+<div class="container tweet-container">
+    {% for tweet in tweets %}
+    <div class="card">
+        <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image">
+        <div class="card-body">
+            <h5 class="card-title">{{ tweet.user.username }}</h5>
+            <p class="card-text">{{ tweet.text }}</p>
+            {% if tweet.user == user %}
+            <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

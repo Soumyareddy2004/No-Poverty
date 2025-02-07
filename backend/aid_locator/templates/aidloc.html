@@ -1,0 +1,181 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Find Aid & Support Services</h2>
+    <p>Enter your <strong>location</strong> to discover <strong>NGOs, job opportunities, and welfare services</strong> near you.</p>
+    
+    <form id="aid-form">
+        <input type="text" id="query" name="query" placeholder="Enter your city or region" required>
+        <button type="submit">Search Aid</button>
+    </form>
+
+    <div id="loading" class="loading" style="display: none;">🔍 Searching...</div>
+    <div id="result" class="result" style="display: none;"></div>
+</div>
+
+<style>
+    body {
+        padding-top:150px;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f4f7f6;
+        margin: 0;
+    }
+
+    .container {
+        padding: 100px;
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #2d8bfc;
+    }
+
+    input, button {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    button {
+        background: #2d8bfc;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .loading {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #2d8bfc;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 15px;
+        background: #eef7ff;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #333;
+        text-align: left;
+    }
+
+    .result h3 {
+        color: #2d8bfc;
+        border-bottom: 2px solid #2d8bfc;
+        padding-bottom: 5px;
+        margin-top: 15px;
+    }
+
+    .result ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .result li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .result a {
+        color: #2d8bfc;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .result a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- <script>
+    document.getElementById('aid-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const query = document.getElementById('query').value;
+        const resultDiv = document.getElementById('result');
+        const loadingDiv = document.getElementById('loading');
+
+        resultDiv.style.display = "none";
+        loadingDiv.style.display = "block";
+
+        const API_KEY = "AIzaSyB1crOoEEOAeUZlXC4IFxkuGzE-m8G8tvA";
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY;
+
+        const payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": `List NGOs, job openings, and welfare schemes available in ${query} with links.`}
+                    ]
+                }
+            ]
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadingDiv.style.display = "none";
+            resultDiv.style.display = "block";
+
+            let ngos = "<h3>Nearby NGOs</h3><ul>";
+            let jobs = "<h3>Job Openings</h3><ul>";
+            let welfare = "<h3>Welfare Schemes</h3><ul>";
+
+            data.candidates[0].content.parts[0].text.split("\n").forEach(item => {
+                let formattedItem = item.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+                if (item.toLowerCase().includes("ngo")) {
+                    ngos += `<li>${formattedItem}</li>`;
+                } else if (item.toLowerCase().includes("job")) {
+                    jobs += `<li>${formattedItem}</li>`;
+                } else if (item.toLowerCase().includes("welfare")) {
+                    welfare += `<li>${formattedItem}</li>`;
+                }
+            });
+
+            ngos += "</ul>";
+            jobs += "</ul>";
+            welfare += "</ul>";
+
+            resultDiv.innerHTML = ngos + jobs + welfare;
+        })
+        .catch(error => {
+            loadingDiv.style.display = "none";
+            resultDiv.style.display = "block";
+            resultDiv.innerHTML = `<strong>Error:</strong> Unable to fetch data. Please try again later.`;
+            console.error('Error:', error);
+        });
+    });
+</script> -->
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
