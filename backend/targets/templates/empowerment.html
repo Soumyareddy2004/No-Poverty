@@ -18,7 +18,7 @@
             <div class="card-body">
                 <h2 class="card-title text-warning">AI-Powered Job & Skills Portal</h2>
                 <p class="card-text">Discover personalized job opportunities & skill-building courses with AI assistance.</p>
-                <button id="get-jobs" class="btn btn-primary mt-3">Find Jobs with AI</button>
+                <a href="{% url 'job_opportunities' %}" class="btn btn-primary mt-3">Jobs with AI</a>
                 <div id="job-results" class="mt-3"></div>
             </div>
         </div>
@@ -47,7 +47,8 @@
             <div class="card-body">
                 <h2 class="card-title text-danger">Microfinance & Loans</h2>
                 <p class="card-text">Empower small businesses with access to financial resources.</p>
-                <a href="microfinance.html" class="btn btn-purple mt-3">Learn More</a>
+                <a href="{% url 'loans:loans_home' %}" class="btn btn-purple mt-3">Learn More</a>
+
             </div>
         </div>
     </div>
@@ -73,7 +74,7 @@
             <div class="card-body">
                 <h2 class="card-title text-primary">Take Action Today</h2>
                 <p class="card-text">Your support can change lives. Donate, volunteer, or contribute to microfinance initiatives.</p>
-                <a href="donate.html" class="btn btn-warning mx-2">Donate Now</a>
+                <a href="{% url 'donate' %}" class="btn btn-success">Donate Now</a>
                 <a href="volunteer.html" class="btn btn-primary mx-2">Become a Volunteer</a>
             </div>
         </div>

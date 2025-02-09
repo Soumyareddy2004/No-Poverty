@@ -23,6 +23,9 @@ GEMINI_API_KEY = env("GEMINI_API_KEY")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
+RAZORPAY_KEY_ID = "rzp_test_yNu8k93iAlAW4s"
+RAZORPAY_KEY_SECRET = "mt23yGLAERopSNMsEcJltfDk"
 SECRET_KEY = 'django-insecure-&7-#l8d!^ll+gv39wm)97^@b13-(07=j_@%8hckw87e#0fol(1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -43,7 +46,14 @@ INSTALLED_APPS = [
     'tweet',
     'targets',
     'aid_locator',
+   'volun',
+   'aisuggest',
+   'pay',
+   'loans',
 ]
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

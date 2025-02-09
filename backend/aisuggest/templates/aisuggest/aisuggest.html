@@ -1,0 +1,164 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Suggestions</title>
+    <style>
+       body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1117, #161b22);
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #1f2937;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #58a6ff;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+        }
+
+        input {
+            background-color: #2d333b;
+            color: #e6edf3;
+            border: 1px solid #444c56;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #58a6ff;
+        }
+
+        button {
+            background: linear-gradient(135deg, #58a6ff, #1f6feb);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.4s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #1f6feb, #58a6ff);
+            transform: scale(1.03);
+        }
+
+        .result-box {
+            background: #2d333b;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            display: none;
+            color: #e6edf3;
+        }
+
+        .result-box h3 {
+            margin-bottom: 10px;
+            color: #58a6ff;
+        }
+
+        .loading {
+            font-size: 16px;
+            font-weight: bold;
+            color: #58a6ff;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            input, button {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Enter District Name</h2>
+        <form id="suggestionForm" method="post">
+            {% csrf_token %}
+            <input type="text" id="district" name="district" placeholder="Type a district name..." required>
+            <button type="submit">Get Suggestions</button>
+        </form>
+
+        <p id="loadingText" class="loading">Fetching AI Suggestions...</p>
+
+        <div id="resultBox" class="result-box">
+            <h3>AI Suggestions:</h3>
+            <p id="suggestions"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("suggestionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let district = document.getElementById("district").value;
+            let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            let resultBox = document.getElementById("resultBox");
+            let loadingText = document.getElementById("loadingText");
+            let suggestionsText = document.getElementById("suggestions");
+
+            resultBox.style.display = "none"; // Hide result initially
+            loadingText.style.display = "block"; // Show loading text
+
+            fetch("{% url 'ai_suggestions' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrfToken
+                },
+                body: "district=" + encodeURIComponent(district)
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingText.style.display = "none"; // Hide loading text
+                resultBox.style.display = "block"; // Show result box
+                suggestionsText.innerText = data.suggestions;
+            })
+            .catch(error => {
+                loadingText.style.display = "none";
+                alert("Error fetching AI suggestions. Try again.");
+                console.error("Error:", error);
+            });
+        });
+    </script>
+
+</body>
+</html>
+{% endblock %}

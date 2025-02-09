@@ -64,7 +64,7 @@
             <div class="card action-card p-3 bg-dark text-white rounded-3 border-multicolor">
                 <h5 class="card-title text-success">Donate</h5>
                 <p class="card-text">Every dollar helps provide food, education, and shelter to those in need.</p>
-                <a href="#" class="btn btn-success">Donate Now</a>
+                <a href="{% url 'donate' %}" class="btn btn-success">Donate Now</a>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
             <div class="card action-card p-3 bg-dark text-white rounded-3 border-multicolor">
                 <h5 class="card-title text-warning">Volunteer</h5>
                 <p class="card-text">Give your time and skills to make a real impact in communities.</p>
-                <a href="#" class="btn btn-warning">Sign Up</a>
+                <a href="{% url 'volun' %}" class="btn btn-warning">Sign Up</a>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
             <div class="card action-card p-3 bg-dark text-white rounded-3 border-multicolor">
                 <h5 class="card-title text-primary">Spread Awareness</h5>
                 <p class="card-text">Use your voice to advocate for change and inspire action.</p>
-                <a href="#" class="btn btn-primary">Share the Message</a>
+                <a href="{% url 'tweet_list' %}" class="btn btn-primary">Share the Message</a>
             </div>
         </div>
     </div>

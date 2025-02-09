@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="container">
-    <h2>Find Aid & Support Services</h2>
-    <p>Enter your <strong>location</strong> to discover <strong>NGOs, job opportunities, and welfare services</strong> near you.</p>
-    
+    <h2>Discover Nearby Aid & Support</h2>
+    <p>Enter your <strong>location</strong> to find <strong>NGOs</strong> and <strong>welfare schemes</strong> near you.</p>
+
     <form id="aid-form">
         <input type="text" id="query" name="query" placeholder="Enter your city or region" required>
         <button type="submit">Search Aid</button>
@@ -17,24 +17,29 @@
 
 <style>
     body {
-        padding-top:150px;
         font-family: 'Poppins', sans-serif;
-        background-color: #f4f7f6;
-        margin: 0;
+        background-color: #121212;
+        color: #ffffff;
+        display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        padding: 20px;
     }
 
     .container {
-        padding: 100px;
-        max-width: 800px;
+        background: #1e1e1e;
+        padding: 40px;
+        max-width: 600px;
         margin: auto;
-        background: white;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba( 0, 0, 0, 0.8);
+        border-radius: 16px;
         text-align: center;
     }
 
     h2 {
-        color: #2d8bfc;
+        color: #1aa04f;
     }
 
     input, button {
@@ -42,50 +47,59 @@
         padding: 12px;
         margin: 10px 0;
         font-size: 16px;
+        border-radius: 8px;
+    }
+
+    input {
+        background-color: #2a2a2a;
+        color: #ffffff;
+        border: 1px solid #444;
     }
 
     button {
-        background: #2d8bfc;
+        background: #31c43a;
         color: white;
         border: none;
         cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background: #0f9040;
     }
 
     .loading {
         margin-top: 10px;
         font-size: 16px;
-        color: #2d8bfc;
+        color: #4fc3f7;
     }
 
     .result {
         margin-top: 20px;
-        padding: 15px;
-        background: #eef7ff;
-        border-radius: 6px;
-        font-size: 16px;
-        color: #333;
+        padding: 20px;
+        background: #263238;
+        border-radius: 12px;
         text-align: left;
     }
 
     .result h3 {
-        color: #2d8bfc;
-        border-bottom: 2px solid #2d8bfc;
+        color: #4fc3f7;
+        border-bottom: 2px solid #4fc3f7;
         padding-bottom: 5px;
-        margin-top: 15px;
     }
 
     .result ul {
-        list-style-type: none;
-        padding-left: 0;
+        list-style: none;
+        padding: 0;
     }
 
     .result li {
         padding: 10px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #37474f;
     }
 
     .result a {
-        color: #2d8bfc;
+        color: #81d4fa;
         text-decoration: none;
         font-weight: bold;
     }
@@ -93,9 +107,15 @@
     .result a:hover {
         text-decoration: underline;
     }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 20px;
+        }
+    }
 </style>
 
-<!-- <script>
+<script>
     document.getElementById('aid-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -107,13 +127,15 @@
         loadingDiv.style.display = "block";
 
         const API_KEY = "AIzaSyB1crOoEEOAeUZlXC4IFxkuGzE-m8G8tvA";
-        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY;
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
         const payload = {
             "contents": [
                 {
                     "parts": [
-                        {"text": `List NGOs, job openings, and welfare schemes available in ${query} with links.`}
+                        {
+                            "text": `Provide a well-structured list of at least 5 active NGOs and 5 welfare schemes in ${query}. Include their official names, brief descriptions, and clickable links (if available). Format clearly under 'NGOs' and 'Welfare Schemes' headings.`
+                        }
                     ]
                 }
             ]
@@ -132,25 +154,23 @@
             resultDiv.style.display = "block";
 
             let ngos = "<h3>Nearby NGOs</h3><ul>";
-            let jobs = "<h3>Job Openings</h3><ul>";
             let welfare = "<h3>Welfare Schemes</h3><ul>";
 
-            data.candidates[0].content.parts[0].text.split("\n").forEach(item => {
-                let formattedItem = item.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
-                if (item.toLowerCase().includes("ngo")) {
+            const items = data.candidates[0]?.content?.parts[0]?.text.split("\n") || [];
+
+            items.forEach(item => {
+                const formattedItem = item.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+                if (/\bngo\b/i.test(item)) {
                     ngos += `<li>${formattedItem}</li>`;
-                } else if (item.toLowerCase().includes("job")) {
-                    jobs += `<li>${formattedItem}</li>`;
-                } else if (item.toLowerCase().includes("welfare")) {
+                } else if (/\bwelfare|scheme\b/i.test(item)) {
                     welfare += `<li>${formattedItem}</li>`;
                 }
             });
 
-            ngos += "</ul>";
-            jobs += "</ul>";
-            welfare += "</ul>";
+            ngos += ngos === "<h3>Nearby NGOs</h3><ul>" ? "<li>No NGOs found in this area.</li>" : "</ul>";
+            welfare += welfare === "<h3>Welfare Schemes</h3><ul>" ? "<li>No welfare schemes found in this area.</li>" : "</ul>";
 
-            resultDiv.innerHTML = ngos + jobs + welfare;
+            resultDiv.innerHTML = ngos + welfare;
         })
         .catch(error => {
             loadingDiv.style.display = "none";
@@ -159,23 +179,6 @@
             console.error('Error:', error);
         });
     });
-</script> -->
+</script>
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support the Poor - NoPoverty</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            font-family: 'Poppins', sans-serif;
+        }
+        h1, p {
+            text-shadow: 1px 1px 3px black;
+        }
+        .gradient-button {
+            background: linear-gradient(90deg, #56ab2f, #a8e063);
+        }
+        .responsive-img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="text-white">
+    <div class="max-w-3xl mx-auto p-6 text-center">
+        <h1 class="text-4xl font-extrabold text-green-400 mb-4">Support the Poor in Need</h1>
+        <p class="text-lg text-gray-300 mb-6">Your small donation can make a big difference. Help provide food, shelter, and hope to those struggling with poverty.</p>
+
+        <img src="/static/support_poor.webp" alt="Support the Poor" class="responsive-img mb-6">
+
+        <form id="donation-form" class="bg-gray-800 p-6 rounded-xl shadow-2xl">
+            <label for="amount" class="block text-xl font-semibold text-green-300 mb-2">Enter Donation Amount (INR)</label>
+            <input type="number" id="amount" name="amount" required class="w-full p-3 rounded border border-gray-700 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400 mb-4">
+            <button type="submit" class="w-full gradient-button hover:opacity-90 text-white font-bold py-3 px-6 rounded-xl transition duration-300">Donate Now</button>
+        </form>
+
+        <p class="text-sm text-gray-400 mt-4">Together, we can create a ripple of kindness and change countless lives.</p>
+    </div>
+
+    <script>
+        document.getElementById("donation-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            let amount = document.getElementById("amount").value;
+
+            fetch("{% url 'pay' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: "amount=" + amount
+            })
+            .then(response => response.json())
+            .then(data => {
+                var options = {
+                    "key": "{{ razorpay_key }}",
+                    "amount": data.amount,
+                    "currency": "INR",
+                    "name": "NoPoverty General Donation",
+                    "description": "Donation to Support the Poor",
+                    "order_id": data.id,
+                    "handler": function (response) {
+                        fetch("{% url 'payment_success' %}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": "{{ csrf_token }}"
+                            },
+                            body: JSON.stringify(response)
+                        })
+                        .then(res => res.json())
+                        .then(result => {
+                            alert(result.message);
+                        });
+                    },
+                    "theme": { "color": "#56ab2f" }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -5,3 +5,5 @@ echo "*.pyo" >> .gitignore
 echo "*.log" >> .gitignore
 echo "db.sqlite3" >> .gitignore
 echo ".env" >> .gitignore
+poverty_env
+.env

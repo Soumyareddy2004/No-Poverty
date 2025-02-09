@@ -42,3 +42,18 @@ def aid_locator_view(request):
             result = get_location_data(location)
     
     return render(request, "aidloc.html", {"result": result})
+
+
+def job_opportunities_view(request):
+    return render(request, "jobs.html")
+
+
+def job_opportunities_view(request):
+    job_results = ""
+    if request.method == "POST":
+        location = request.POST.get("location")
+        if location:
+            job_results = get_location_data(location)
+    
+    return render(request, "jobs.html", {"job_results": job_results})
+

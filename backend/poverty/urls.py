@@ -29,5 +29,11 @@ urlpatterns = [
    path('', redirect_to_login, name='index'), 
    path('targets/', include('targets.urls')),
    path('aid_locator/', include('aid_locator.urls')),
+   
    path('accounts/', include('django.contrib.auth.urls')),
+   path('volun/', include('volun.urls')),
+   path('aisuggest/', include('aisuggest.urls')),
+   path('pay/', include('pay.urls')),
+   path('donate/', include('pay.urls')),
+   path('loans/', include('loans.urls')),
 ] + static(settings.MEDIA_URL , document_root=settings.MEDIA_ROOT)

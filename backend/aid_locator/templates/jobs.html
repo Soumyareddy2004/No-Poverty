@@ -1,0 +1,180 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Find Job Openings Near You</h2>
+    <p>Enter your <strong>location</strong> to discover the latest <strong>job opportunities</strong> in your area.</p>
+
+    <form id="job-form" method="post">
+        {% csrf_token %}
+        <input type="text" id="job-query" name="query" placeholder="Enter your city or region" required>
+        <button type="submit">Search Jobs</button>
+    </form>
+    
+
+    <div id="job-loading" class="loading" style="display: none;">🔍 Searching for jobs...</div>
+    <div id="job-result" class="result" style="display: none;"></div>
+</div>
+
+<style>
+    body {
+        padding-top: 250px;
+        font-family: 'Poppins', sans-serif;
+        background-color: #121212;
+        color: #ffffff;
+        display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        padding: 20px;
+    }
+
+    .container {
+        
+        background: #1e1e1e;
+        padding: 40px;
+        max-width: 600px;
+        margin: auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #f7734f;
+    }
+
+    input, button {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    input {
+        background-color: #2a2a2a;
+        color: #ffffff;
+        border: 1px solid #444;
+    }
+
+    button {
+        background: #f85531;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background: #fc7334;
+    }
+
+    .loading {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #f7db4f;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 20px;
+        background: #263238;
+        border-radius: 12px;
+        text-align: left;
+    }
+
+    .result h3 {
+        color: #4fc3f7;
+        border-bottom: 2px solid #4fc3f7;
+        padding-bottom: 5px;
+    }
+
+    .result ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .result li {
+        padding: 10px;
+        border-bottom: 1px solid #37474f;
+    }
+
+    .result a {
+        color: #81d4fa;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .result a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 20px;
+        }
+    }
+</style>
+
+<script>
+    document.getElementById('job-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const query = document.getElementById('job-query').value;
+        const resultDiv = document.getElementById('job-result');
+        const loadingDiv = document.getElementById('job-loading');
+
+        resultDiv.style.display = "none";
+        loadingDiv.style.display = "block";
+
+        const API_KEY = "AIzaSyB1crOoEEOAeUZlXC4IFxkuGzE-m8G8tvA";  // Replace with your actual API key
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+
+        const payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": `List at least 5 current job openings available in ${query}. Include the job title, company name, location, and a direct link to apply for each.`}
+                    ]
+                }
+            ]
+        };
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadingDiv.style.display = "none";
+            resultDiv.style.display = "block";
+
+            let jobs = "<h3>Job Openings</h3><ul>";
+
+            data.candidates[0].content.parts[0].text.split("\n").forEach(item => {
+                const formattedItem = item.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+                if (item.trim() !== "") {
+                    jobs += `<li>${formattedItem}</li>`;
+                }
+            });
+
+            jobs += "</ul>";
+
+            resultDiv.innerHTML = jobs;
+        })
+        .catch(error => {
+            loadingDiv.style.display = "none";
+            resultDiv.style.display = "block";
+            resultDiv.innerHTML = `<strong>Error:</strong> Unable to fetch job data. Please try again later.`;
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+{% endblock %}
