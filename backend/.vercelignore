@@ -1,0 +1,8 @@
+poverty_env/
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.log
+node_modules/
+db.sqlite3
