@@ -36,4 +36,6 @@ urlpatterns = [
    path('pay/', include('pay.urls')),
    path('donate/', include('pay.urls')),
    path('loans/', include('loans.urls')),
+   path('food/', include('food.urls')),
+   path('map/', include('map.urls')),
 ] + static(settings.MEDIA_URL , document_root=settings.MEDIA_ROOT)

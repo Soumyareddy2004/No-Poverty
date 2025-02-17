@@ -25,20 +25,7 @@
     </div>
 </section>
 
-<!-- Eligibility Checker -->
-<section class="eligibility-section py-5 bg-dark text-white text-center">
-    <div class="container">
-        <div class="card card-dark border-gradient">
-            <div class="card-body">
-                <h2 class="card-title text-info">Eligibility Checker for Social Protection</h2>
-                <p class="card-text">Find out if you qualify for welfare programs instantly.</p>
-                <input type="text" id="eligibility-input" class="form-control w-50 mx-auto mt-3" placeholder="Enter your details">
-                <button id="check-eligibility" class="btn btn-success mt-3">Check Now</button>
-                <div id="eligibility-result" class="mt-3"></div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Microfinance & Loans -->
 <section class="py-5 bg-dark text-white text-center">
@@ -55,7 +42,7 @@
 </section>
 
 <!-- NGO & Volunteer Hub -->
-<section class="bg-dark text-white py-5 text-center">
+<!-- <section class="bg-dark text-white py-5 text-center">
     <div class="container">
         <div class="card card-dark border-gradient">
             <div class="card-body">
@@ -65,7 +52,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- Call to Action -->
 <section class="text-center py-5 bg-dark text-white">
@@ -75,7 +62,7 @@
                 <h2 class="card-title text-primary">Take Action Today</h2>
                 <p class="card-text">Your support can change lives. Donate, volunteer, or contribute to microfinance initiatives.</p>
                 <a href="{% url 'donate' %}" class="btn btn-success">Donate Now</a>
-                <a href="volunteer.html" class="btn btn-primary mx-2">Become a Volunteer</a>
+                <a href="{% url 'volun' %}" class="btn btn-warning">Sign Up</a>
             </div>
         </div>
     </div>

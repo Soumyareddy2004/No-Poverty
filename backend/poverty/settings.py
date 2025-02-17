@@ -34,6 +34,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
    'aisuggest',
    'pay',
    'loans',
+   'food',
+   'map',
 ]
 
 
@@ -141,6 +144,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 LOGIN_URL='/accounts/login'
 LOGIN_REDIRECT_URL='/tweet'
 LOGOUT_REDIRECT_URL='/tweet'

@@ -12,7 +12,7 @@
     <style>
         /* Navbar Styling */
         .navbar {
-            height: 80px; /* Fixed height */
+            height: 80px;
             background-color: #323232 !important;
             box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
             display: flex;
@@ -23,7 +23,6 @@
             font-size: 24px !important;
         }
 
-        /* Ensuring consistency in buttons and links */
         .navbar-nav .nav-link,
         .navbar-nav .btn {
             font-size: 16px !important;
@@ -47,13 +46,14 @@
             width: 250px;
             height: 100vh;
             position: fixed;
-            top: 80px; /* Adjusted for navbar height */
+            top: 80px;
             left: 0;
             background: #1c1c1c;
             display: flex;
             flex-direction: column;
             padding-top: 20px;
             box-shadow: 4px 0 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
         }
 
         .sidebar .nav-link {
@@ -68,21 +68,46 @@
             color: #1c1c1c;
         }
 
-        /* Ensure consistent spacing */
-        .container-fluid {
+        .content {
             margin-left: 260px;
             padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 1000;
+            }
+            .content {
+                margin-left: 0;
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .sidebar-toggle {
+                position: fixed;
+                top: 90px;
+                left: 15px;
+                background: #4f86f6;
+                color: white;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                z-index: 1100;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Fixed Top Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
         <a class="navbar-brand font-weight-bold text-white" href="#">No Poverty</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -108,58 +133,28 @@
         </div>
     </nav>
 
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <nav class="sidebar text-white p-3">
-            <ul class="nav flex-column text-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Poverty Analysis</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'aidloc' %}">Aid Locator</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'job_opportunities' %}">Job Opportunities</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ai_suggestions' %}">AI Suggestions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'empowerment' %}">Empowerment & Social Protection</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'resilience' %}">Resilience & Crisis Support</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'policy' %}">Policy & Community Engagement</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
+    <nav class="sidebar text-white p-3" id="sidebar">
+        <ul class="nav flex-column text-center">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'ai_suggestions' %}">Census-Based Analysis</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'map_view' %}">Satellite-Based Analysis</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'aidloc' %}">Aid Locator</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'job_opportunities' %}">Job Opportunities</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'empowerment' %}">Empowerment & Social Protection</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'resilience' %}">Resilience & Crisis Support</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'policy' %}">Policy & Community Engagement</a></li>
+        </ul>
+    </nav>
 
-        <!-- Main Content -->
-        <div class="container-fluid">
-            {% block content %}
-            {% endblock %}
-        </div>
+    <div class="content" id="content">
+        {% block content %}{% endblock %}
     </div>
+
     <script>
-        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="hRfVBM61nDAJUwtfRu8te";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
+        }
     </script>
-    <style>
-        /* Increase the size of the Chatbase chatbot */
-/* Increase the size of the Chatbase chatbot */
-iframe#chatbase-chatbot-frame {
-    width: 150px !important; /* Increase width */
-    height: 150px !important; /* Increase height */
-    bottom: 20px !important; /* Adjust position */
-    right: 20px !important; /* Adjust position */
-    transform: scale(1.5); /* Scale up the chatbot */
-}
-
-
-    </style>
 </body>
 </html>

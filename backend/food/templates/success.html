@@ -1,0 +1,53 @@
+{% block content %}
+<div class="container text-center mt-5 thank-you-container">
+    <h2>Thank You!</h2>
+    <p>Your food donation details have been submitted successfully.</p>
+    <a href="{% url 'donate_food' %}" class="btn btn-primary">Donate Again</a>
+</div>
+
+<style>
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.thank-you-container {
+    max-width: 500px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 18px;
+    color: #333;
+}
+
+.btn-primary {
+    background: #007bff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+</style>
+{% endblock %}

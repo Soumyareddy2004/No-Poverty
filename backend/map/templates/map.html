@@ -1,0 +1,161 @@
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4 heading">Satellite Image and AI Suggestions</h2>
+
+    <!-- Form for Map and District AI Suggestions -->
+    <form method="post" class="text-center mt-4 shadow-lg p-4 rounded">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <input type="text" name="address" class="form-control w-75 mx-auto input-lg" placeholder="Enter location..." required>
+            <button type="submit" class="btn btn-lg btn-primary mt-3">Get Image and AI Suggestions</button>
+        </div>
+    </form>
+
+    <!-- Display Standard Satellite Image -->
+    {% if map_url_standard %}
+    <div class="text-center mt-5">
+        <h3>Standard Satellite Image</h3>
+        <img src="{{ map_url_standard }}" alt="Standard Map Image" class="img-fluid rounded shadow">
+    </div>
+    {% endif %}
+
+    <!-- Display Night Mode Satellite Image -->
+    {% if map_url_night %}
+    <div class="text-center mt-5">
+        <h3>Default Satellite Image</h3>
+        <img src="{{ map_url_night }}" alt="Night Mode Map Image" class="img-fluid rounded shadow">
+    </div>
+    {% endif %}
+
+    <!-- Display AI Suggestions -->
+    {% if ai_suggestions %}
+    <div class="text-center mt-5">
+        <h3>AI Suggestions</h3>
+        <div class="card p-3 mb-4">
+            <pre>{{ ai_suggestions }}</pre>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #181818; /* Dark background */
+        color: #e1e1e1; /* Light text */
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 900px;
+        margin-top: 50px;
+        padding: 0 15px;
+    }
+
+    /* Header Styling */
+    .heading {
+        color: #4d9aff; /* Soft blue for heading */
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+    }
+
+    /* Form Styling */
+    .form-group input {
+        padding: 15px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        border: 2px solid #444; /* Darker border */
+        width: 80%;
+        max-width: 450px;
+        margin-bottom: 20px;
+        transition: border 0.3s ease;
+        background-color: #333; /* Dark background for input */
+        color: #e1e1e1; /* Light text */
+    }
+
+    .form-group input:focus {
+        border-color: #4d9aff; /* Blue focus */
+        outline: none;
+    }
+
+    .btn-primary {
+        background-color: #4d9aff; /* Soft blue for button */
+        border: none;
+        color: white;
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #3578e5; /* Slightly darker blue */
+    }
+
+    /* Image Styling */
+    img {
+        border-radius: 15px;
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3); /* Darker shadow for images */
+        max-height: 600px;
+    }
+
+    /* Card Styling for Suggestions */
+    .card {
+        background-color: #2c2c2c; /* Dark background for card */
+        border-radius: 12px;
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3); /* Darker shadow */
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .card pre {
+        background-color: #1e1e1e; /* Dark background for suggestions */
+        padding: 20px;
+        font-size: 1.1rem;
+        color: #e1e1e1; /* Light text */
+        border-radius: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin: 0;
+    }
+
+    h3 {
+        font-size: 1.9rem;
+        color: #e1e1e1; /* Light color for headings */
+        font-weight: 600;
+    }
+
+    /* Spacing and Margins */
+    .text-center {
+        margin-top: 40px;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .heading {
+            font-size: 2rem;
+        }
+
+        .form-group input {
+            width: 90%;
+        }
+
+        .btn-primary {
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

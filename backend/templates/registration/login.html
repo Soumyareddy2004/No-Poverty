@@ -4,11 +4,11 @@
 {% block content %}
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
     <div class="row w-100 h-100 m-0">
-        
+
         <!-- Left Half - Image Carousel -->
         <div class="col-md-6 p-0">
-            <div id="loginCarousel" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="4000">
-                
+            <div id="loginCarousel" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="3000"> <!-- Auto-slide enabled -->
+
                 <!-- Carousel Indicators (Dots) -->
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#loginCarousel" data-bs-slide-to="0" class="active"></button>
@@ -20,12 +20,24 @@
                 <div class="carousel-inner h-100">
                     <div class="carousel-item active">
                         <img src="{% static '1.png' %}" class="d-block w-100 h-100 object-fit-cover" alt="Image 1">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Join the Movement</h5>
+                            <p>Be part of the change to eradicate poverty.</p>
+                        </div>
                     </div>
                     <div class="carousel-item">
                         <img src="{% static '2.png' %}" class="d-block w-100 h-100 object-fit-cover" alt="Image 2">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Empower Communities</h5>
+                            <p>Your support makes a real difference.</p>
+                        </div>
                     </div>
                     <div class="carousel-item">
                         <img src="{% static 'pov1.jpeg' %}" class="d-block w-100 h-100 object-fit-cover" alt="Image 3">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Act Now</h5>
+                            <p>Join us in the fight against poverty.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -79,11 +91,16 @@
         object-fit: cover;
         height: 100vh;
     }
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 12px;
+    }
     .carousel-control-prev-icon, .carousel-control-next-icon {
         filter: invert(1);
     }
     .login-container {
-        background: black;
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -96,13 +113,17 @@
         padding: 50px;
         border-radius: 12px;
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+    }
+    .login-box:hover {
+        transform: translateY(-5px);
     }
     .btn-primary {
-        background-color: #673ab7;
+        background: linear-gradient(90deg, #6a11cb, #2575fc);
         border: none;
     }
     .btn-primary:hover {
-        background-color: #512da8;
+        background: linear-gradient(90deg, #2575fc, #6a11cb);
     }
     .form-control {
         background: rgba(255, 255, 255, 0.1);
@@ -111,7 +132,7 @@
     }
     .form-control:focus {
         background: rgba(255, 255, 255, 0.2);
-        border-color: #673ab7;
+        border-color: #6a11cb;
         box-shadow: 0 0 10px rgba(103, 58, 183, 0.5);
     }
 </style>

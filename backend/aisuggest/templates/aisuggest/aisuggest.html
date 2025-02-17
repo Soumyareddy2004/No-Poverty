@@ -1,21 +1,46 @@
-{% block content %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Suggestions</title>
+    <title>AI-Powered District Analysis</title>
     <style>
-       body {
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0d1117, #161b22);
             color: #c9d1d9;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            text-align: center;
+        }
+
+        .hero-section {
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        .hero-section h1 {
+            color: #58a6ff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #c9d1d9;
+        }
+
+        .hero-section img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            margin-top: 20px;
         }
 
         .container {
@@ -94,19 +119,15 @@
             color: #58a6ff;
             display: none;
         }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            input, button {
-                padding: 12px;
-            }
-        }
     </style>
 </head>
 <body>
+
+    <div class="hero-section">
+        <h1>AI-Powered District Analysis</h1>
+        <p>Our AI model, trained on comprehensive census data, identifies areas that require development. NGOs and government organizations can leverage these insights to drive impactful change.</p>
+        <img src="{% static 'census.webp' %}" alt="AI District Analysis">
+    </div>
 
     <div class="container">
         <h2>Enter District Name</h2>
@@ -134,8 +155,8 @@
             let loadingText = document.getElementById("loadingText");
             let suggestionsText = document.getElementById("suggestions");
 
-            resultBox.style.display = "none"; // Hide result initially
-            loadingText.style.display = "block"; // Show loading text
+            resultBox.style.display = "none";
+            loadingText.style.display = "block";
 
             fetch("{% url 'ai_suggestions' %}", {
                 method: "POST",
@@ -147,8 +168,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                loadingText.style.display = "none"; // Hide loading text
-                resultBox.style.display = "block"; // Show result box
+                loadingText.style.display = "none";
+                resultBox.style.display = "block";
                 suggestionsText.innerText = data.suggestions;
             })
             .catch(error => {
@@ -161,4 +182,3 @@
 
 </body>
 </html>
-{% endblock %}
