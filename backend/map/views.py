@@ -92,8 +92,8 @@ from django.http import JsonResponse
 import pandas as pd
 
 # 🔹 Replace with your valid Google API keys
-GEOCODING_API_KEY = os.getenv("GEMINI_API_KEY")
-STATIC_MAPS_API_KEY = os.getenv("GEMINI_API_KEY")
+GEOCODING_API_KEY = "AIzaSyDT8SH4ZwByMZndW5tlRccp6pcoEY31PFw"
+STATIC_MAPS_API_KEY = "AIzaSyDT8SH4ZwByMZndW5tlRccp6pcoEY31PFw"
 
 # Load your CSV file
 data = pd.read_csv('f0.csv')  # Replace with your actual CSV path
