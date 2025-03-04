@@ -39,7 +39,7 @@ def get_ai_suggestions(facilities):
     """
 
     try:
-        model = genai.GenerativeModel("gemini-pro")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(prompt)
         return response.text  # Get AI response
     except Exception as e:
