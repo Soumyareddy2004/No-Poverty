@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 def get_location_data(location):
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
     
     prompt = (
         f"List NGOs, welfare schemes, and job openings available in {location}. "
